@@ -83,30 +83,6 @@ public class ServerMap {
         return true;
     }
 
-    [Conditional("DEBUG")]
-    internal void CreateDebugMap() {
-        using (var stream = FileServices.CreateTempFileStream("map.server.png")) {
-            var img = new System.Drawing.Bitmap(Width, Height);
-            for (int i = 0; i < Width; i++) {
-                for (int j = 0; j < Height; j++) {
-                    byte light = this[i, j].Light;
-
-                    Color xnaColor = this[i, j].Type switch {
-                        MapTypeConvert.Block => new Color(69, 95, 186),
-                        MapTypeConvert.BGObject => new Color(39, 71, 145),
-                        MapTypeConvert.Wall => new Color(35, 62, 97),
-                        _ => new Color(15, 29, 42)
-                    };
-                    xnaColor = xnaColor.MultiplyRGB(new Color(light, light, light));
-
-                    var rgb = System.Drawing.Color.FromArgb(255, xnaColor.R, xnaColor.G, xnaColor.B);
-                    img.SetPixel(i, j, rgb);
-                }
-            }
-            img.Save(stream, System.Drawing.Imaging.ImageFormat.Png);
-        }
-    }
-
     public float GetChunkProgress(int chunk) {
         return chunk / (float)MaxChunks;
     }
