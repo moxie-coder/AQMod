@@ -46,8 +46,6 @@ public class ServerMapUploadPacket : PacketHandler {
             BinaryWriter p = GetPacket();
             p.Write((byte)1);
             SendPacket(p, toClient: player);
-
-            ModContent.GetInstance<CartographyTableSystem>().Map!.CreateDebugMap();
         }
     }
 
